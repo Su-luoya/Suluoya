@@ -1,0 +1,15 @@
+pandas
+numpy
+scipy
+statsmodels
+tqdm
+baostock
+pretty_errors
+termcolor
+matplotlib==3.4.3
+seaborn
+lunar_python
+tushare
+pysimplegui
+openpyxl
+pyecharts
