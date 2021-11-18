@@ -109,7 +109,7 @@ class App(object):
             str(end_date)+'-'+values['no_risk_rate']+'-'+values['funds']
         self.save(path, name, dic)
         mk.heatmap()
-        si = SyntheticIndex(weights=opt_dict['weights'])
+        si = SyntheticIndex(weights=opt_dict['weights'],path=path+'\\Markovitz')
         si.draw_chart()
         mk.drawing()
 

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Suluoya
-Version: 3.3.3
+Version: 3.3.5
 Summary: A package called Suluoya.
 Home-page: https://github.com/pypa/sampleproject
 Author: Suluoya
@@ -17,10 +17,13 @@ License-File: LICENSE
 
 # Suluoya
 
-[ReadMe](https://www.wolai.com/suluoya/qctn96iZkw9pv6fwshiGeZ?theme=light)
+| **[ReadMe](https://www.wolai.com/suluoya/qctn96iZkw9pv6fwshiGeZ)** | [Github1s](https://github1s.com/Su-luoya/Suluoya) | **[PyPi](https://pypi.org/project/Suluoya/)** |
+| :----------------------------------------------------------: | :-----------------------------------------------: | :-------------------------------------------: |
 
-
-[GitHub](https://github1s.com/Su-luoya/Suluoya)   [PyPi](https://pypi.org/project/Suluoya/)
+```python
+import Suluoya as sly
+sly.welcome()
+```
 
 
 

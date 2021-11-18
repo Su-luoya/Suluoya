@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf8') as fh:
 
 setuptools.setup(
     name="Suluoya",
-    version="3.3.3",
+    version="3.3.5",
     author="Suluoya",
     author_email="1931960436@qq.com",
     maintainer='Suluoya',
@@ -28,7 +28,7 @@ setuptools.setup(
                       'baostock',
                       'pretty_errors',
                       'termcolor',
-                      'matplotlib==3.4.3',
+                      'matplotlib',
                       'seaborn',
                       'lunar_python',
                       'tushare',

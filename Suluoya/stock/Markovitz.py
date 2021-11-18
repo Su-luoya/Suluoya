@@ -4,6 +4,7 @@ import random
 import sys
 import time
 from itertools import combinations, product
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -20,6 +21,9 @@ except:
     from data.Stock import StockData
     from log.log import hide, makedir, progress_bar, show, slog, sprint
 
+import warnings
+warnings.filterwarnings('ignore')
+
 
 class Markovitz(object):
     '''
@@ -32,11 +36,11 @@ class Markovitz(object):
     path --> 默认缓存路径为：".\\Suluoya cache\\"，可传入False不缓存
     '''
 
-    def __init__(self, names=['贵州茅台', '隆基股份', '五粮液'],
+    def __init__(self, names=['比亚迪', '阳光电源', '璞泰来', '紫光国微', '盛新锂能'],
                  start_date='2021-05-01',
                  end_date='2021-11-01',
                  frequency='d',
-                 no_risk_rate=0.023467,
+                 no_risk_rate=0.023467/365,
                  funds=10000000,
                  path='.\\Suluoya cache\\'):
         self.names = names
@@ -90,8 +94,7 @@ class Markovitz(object):
         '''
         data = self.data[['date', 'name', 'pctChg']]
         # 收益率 均值
-        data_mean = data.groupby('name').mean().T
-        data_mean.columns = self.names
+        data_mean = data.groupby('name').mean().T[self.names]
         # 收益率 协方差矩阵和相关系数矩阵
         df = pd.DataFrame()
         for name in self.names:
@@ -329,7 +332,7 @@ class Markovitz(object):
         '''
         构建临近整数组合 --> DataFrame
         '''
-        lists = []
+        lists = [shares_dict]
         for name, number in shares_dict.items():
             shares_dict_copy_1 = shares_dict.copy()
             shares_dict_copy_2 = shares_dict.copy()
@@ -362,7 +365,7 @@ class Markovitz(object):
         # 初始整数组合
         exam_tree = pd.DataFrame()
         exam_tree['weights'] = self.port(self.init_tree())
-        max_sharpe = 0
+        max_sharpe = -9999999
         sprint('Searching for the integer shares')
         n = 0
         while True:
@@ -375,12 +378,13 @@ class Markovitz(object):
             df_exam = pd.DataFrame(tree_list, columns=['shares', 'sharpe']).sort_values(
                 by='sharpe', ascending=False)
             # 引入过滤条件减少计算量
-            df_exam = df_exam[df_exam['sharpe'] > max_sharpe]
-            if len(df_exam) == 0:
-                return df_exam_result.iloc[0].to_dict()
+            df_exam = df_exam[df_exam['sharpe'] >= max_sharpe]
+            if len(df_exam) == 1:
+                return df_exam.iloc[0].to_dict()
             # 本次迭代最大sharpe
             max_sharpe = df_exam['sharpe'].iloc[0]
-            df_exam_result = df_exam.copy()
+            print(
+                f'第{n}次迭代\nmax_sharpe:{max_sharpe}\nshares:{df_exam["shares"].iloc[0]}\n'+'-'*100)
             exam_tree = pd.DataFrame()
             exam_tree['weights'] = self.port(df_exam)
 
@@ -411,8 +415,8 @@ class Markovitz(object):
             df_opt['sharpe'].iloc[0] = result_dict['sharpe']
             df_opt['sum_cost'] = None
             df_opt['sum_cost'].iloc[0] = result_dict['sum_cost']
-            df_opt.columns = ['shares', 'weights',
-                              'cost', 'sharpe', 'sum_cost']
+            df_opt.columns = ['shares', 'sharpe',
+                              'weights', 'cost', 'sum_cost']
             df_opt.to_csv(f'{self.path}\\max sharpe and weights (integer).csv')
         return result_dict
 
@@ -442,12 +446,12 @@ class Markovitz(object):
 
 if __name__ == '__main__':
     from pprint import pprint
-    mk = Markovitz(names=['贵州茅台', '隆基股份', '五粮液'],  # 股票组合
+    mk = Markovitz(names=['比亚迪', '阳光电源', '璞泰来', '紫光国微', '盛新锂能'],  # 股票组合
                    start_date='2021-05-12',  # 开始日期
                    end_date='2021-11-12',  # 结束日期
                    frequency='w',
-                   no_risk_rate=0.023467,  # 无风险利率
+                   no_risk_rate=0.023467/52,  # 无风险利率
                    funds=10000000,  # 最大资金限制
                    path='cache'
                    )
-    print(mk.buy())
+    pprint(mk.buy())

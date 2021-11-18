@@ -6,7 +6,7 @@ tqdm
 baostock
 pretty_errors
 termcolor
-matplotlib==3.4.3
+matplotlib
 seaborn
 lunar_python
 tushare
