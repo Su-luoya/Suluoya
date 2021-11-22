@@ -11,7 +11,6 @@ Suluoya.egg-info/top_level.txt
 Suluoya/app/App.py
 Suluoya/app/__init__.py
 Suluoya/data/Bond.py
-Suluoya/data/Code.py
 Suluoya/data/Company.py
 Suluoya/data/Date.py
 Suluoya/data/Fund.py

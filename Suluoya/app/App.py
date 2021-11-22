@@ -108,9 +108,10 @@ class App(object):
         name = func_name+'-'+str(stock_list)+'-'+str(start_date)+'--' + \
             str(end_date)+'-'+values['no_risk_rate']+'-'+values['funds']
         self.save(path, name, dic)
-        mk.heatmap()
-        si = SyntheticIndex(weights=opt_dict['weights'],path=path+'\\Markovitz')
+        si = SyntheticIndex(
+            weights=opt_dict['weights'], path=path+'\\Markovitz')
         si.draw_chart()
+        mk.heatmap()
         mk.drawing()
 
     def markovitz_work(self):

@@ -12,11 +12,9 @@ sys.path.append(os.path.dirname(__file__) + os.sep + '../')
 try:
     from ..data.Stock import StockData, ConstituentStocks
     from ..log.log import hide, show, slog, sprint
-    from ..data.Code import stock_pair
 except:
     from log.log import hide, show, slog, sprint
     from data.Stock import StockData, ConstituentStocks
-    from data.Code import stock_pair
 
 
 class IndustryAnalysis(object):
@@ -26,7 +24,8 @@ class IndustryAnalysis(object):
 
     def __init__(self, names=['贵州茅台', '隆基股份']):
         self.names = names
-        self.codes = {i: j for i, j in stock_pair(names=names).items()}.values()
+        self.codes = {i: j for i, j in stock_pair(
+            names=names).items()}.values()
         self.url = 'http://f10.eastmoney.com/IndustryAnalysis/IndustryAnalysisAjax?'
         self.headers = {
             "Host": "f10.eastmoney.com",
@@ -256,8 +255,6 @@ class FinancialStatements(object):
             del df['名称']
             df.to_excel(writer, name, index=False)
         writer.save()
-
-
 
 
 if __name__ == '__main__':

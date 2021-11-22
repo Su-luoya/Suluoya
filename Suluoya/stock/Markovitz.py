@@ -1,3 +1,4 @@
+import warnings
 import math
 import os
 import random
@@ -21,7 +22,6 @@ except:
     from data.Stock import StockData
     from log.log import hide, makedir, progress_bar, show, slog, sprint
 
-import warnings
 warnings.filterwarnings('ignore')
 
 
@@ -31,7 +31,7 @@ class Markovitz(object):
     names=['贵州茅台', '隆基股份', '五粮液']
     start_date='2021-05-01'
     end_date='2021-11-01'
-    no_risk_rate=0.023467
+    no_risk_rate=0.023467/365
     funds=10000000
     path --> 默认缓存路径为：".\\Suluoya cache\\"，可传入False不缓存
     '''
@@ -48,14 +48,13 @@ class Markovitz(object):
         self.start_date = start_date
         self.end_date = end_date
         self.frequency = frequency
-        self.no_risk_rate = no_risk_rate
+        self.no_risk_rate = no_risk_rate*100
         self.funds = funds
         self.path = path
         if self.path:
             makedir(self.path, '')
         sprint('Initializing...')
         if not self.path:
-            # global StockData
             sd = StockData(names=self.names, start_date=self.start_date,
                            end_date=self.end_date, frequency=self.frequency)
             self.datas = sd.stocks_data()
@@ -446,12 +445,12 @@ class Markovitz(object):
 
 if __name__ == '__main__':
     from pprint import pprint
-    mk = Markovitz(names=['比亚迪', '阳光电源', '璞泰来', '紫光国微', '盛新锂能'],  # 股票组合
-                   start_date='2021-05-12',  # 开始日期
-                   end_date='2021-11-12',  # 结束日期
-                   frequency='w',
-                   no_risk_rate=0.023467/52,  # 无风险利率
+    mk = Markovitz(names=['口子窖', '安科瑞', '紫光国微', '航发控制', '隆基股份'],  # 股票组合
+                   start_date='2020-11-01',  # 开始日期
+                   end_date='2021-11-01',  # 结束日期
+                   frequency='d',
+                   no_risk_rate=0.023467/365,  # 无风险利率
                    funds=10000000,  # 最大资金限制
                    path='cache'
                    )
-    pprint(mk.buy())
+    pprint(mk.drawing())

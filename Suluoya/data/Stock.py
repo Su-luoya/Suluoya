@@ -5,6 +5,7 @@ import os
 import re
 import sys
 import time
+from pprint import pprint
 
 import baostock as bs
 import pandas as pd
@@ -14,9 +15,9 @@ from tqdm import tqdm, trange
 
 sys.path.append(os.path.dirname(__file__) + os.sep + '../')
 try:
-    from ..log.log import hide, show, slog, sprint, makedir
+    from ..log.log import hide, makedir, show, slog, sprint
 except:
-    from log.log import hide, show, slog, sprint, makedir
+    from log.log import hide, makedir, show, slog, sprint
 
 
 def get_data(rs):
@@ -131,6 +132,7 @@ class StockData(object):
             df_list.append(df)
         df = pd.concat(df_list).apply(pd.to_numeric, errors='ignore')
         df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+        # df['pctChg'] = df['pctChg']/100
         if self.path:
             df.to_csv(f'{self.path}\\stock data\\stocks_data.csv', index=False)
         return df
@@ -164,7 +166,7 @@ class ConstituentStocks(StockData):
 
 
 def GetGoodStock(page=5):
-    sprint('getting data from http://fund.eastmoney.com/data/rankhandler.aspx')
+    sprint('Getting data from http://fund.eastmoney.com/data/rankhandler.aspx ...')
     url = "http://fund.eastmoney.com/data/rankhandler.aspx"
     headers = {
         "Host": "fund.eastmoney.com",
@@ -177,8 +179,8 @@ def GetGoodStock(page=5):
         params = {
             "op": "ph",
             "sc": "6yzf",
-            "sd": '2021-03-11',
-            "ed": '2021-03-11',
+            "sd": f'{time.strftime("%Y-%m-%d", time.localtime())}',
+            "ed": f'{time.strftime("%Y-%m-%d", time.localtime())}',
             "pi": str(page),
             "dx": "1",
         }
@@ -204,7 +206,6 @@ def GetGoodStock(page=5):
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         for url in urls:
-            sprint(url)
             executor.submit(main, url)
 
     stock = pd.concat(stocks)
@@ -222,8 +223,9 @@ def GetGoodStock(page=5):
 
 
 if __name__ == '__main__':
-    cs = StockData(names=['贵州茅台', '隆基股份'], start_date='2021-01-28',
-                   end_date='2021-09-28', frequency='w',
-                   path=r'.\\Suluoya cache\\')
-    test = cs.stocks_info()
-    print(test)
+    # cs = StockData(names=['贵州茅台', '隆基股份'], start_date='2021-01-28',
+    #                end_date='2021-09-28', frequency='w',
+    #                path=r'.\\Suluoya cache\\')
+    # test = cs.stocks_info()
+    gs = GetGoodStock(1)
+    print(gs)
