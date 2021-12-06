@@ -13,3 +13,4 @@ tushare
 pysimplegui
 openpyxl
 pyecharts
+statsmodels

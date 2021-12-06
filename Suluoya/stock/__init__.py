@@ -1,7 +1,6 @@
 __name__ = "Suluoya"
 __author__ = 'Suluoya'
-__all__ = ['Markovitz']
+__all__ = ['Portfolio','Kline']
 
 
-from .Markovitz import Markovitz
-from .Kline import SyntheticIndex
+from .Portfolio import Markovitz,CAPM,Port

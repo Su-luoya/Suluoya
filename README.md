@@ -7,4 +7,3 @@
 import Suluoya as sly
 sly.welcome()
 ```
-

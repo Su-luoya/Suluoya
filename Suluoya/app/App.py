@@ -1,27 +1,28 @@
 import os
 import sys
 import time
+
 import pandas as pd
 import pretty_errors
 import PySimpleGUI as sg
 
 sys.path.append(os.path.dirname(__file__) + os.sep + '../')
 try:
-    from ..data.Company import FinancialStatements, IndustryAnalysis
-    from ..data.Stock import ConstituentStocks, StockData, GetGoodStock
     from ..data.Bond import BondData
+    from ..data.Company import FinancialStatements, IndustryAnalysis
     from ..data.Date import GetDate
+    from ..data.Stock import ConstituentStocks, GetGoodStock, StockData
     from ..log.log import hide, show, slog, sprint
-    from ..stock.Markovitz import Markovitz
     from ..stock.Kline import SyntheticIndex
+    from ..stock.Markovitz import Markovitz
 except:
-    from data.Company import FinancialStatements, IndustryAnalysis
-    from data.Stock import ConstituentStocks, StockData, GetGoodStock
     from data.Bond import BondData
+    from data.Company import FinancialStatements, IndustryAnalysis
     from data.Date import GetDate
+    from data.Stock import ConstituentStocks, GetGoodStock, StockData
     from log.log import hide, show, slog, sprint
-    from stock.Markovitz import Markovitz
     from stock.Kline import SyntheticIndex
+    from stock.Markovitz import Markovitz
 
 
 class App(object):
@@ -78,7 +79,7 @@ class App(object):
         start_date = values['start_date']
         end_date = values['end_date']
         stock_list = values['stock_list'].rstrip().split('\n')
-        no_risk_rate = float(values['no_risk_rate'])
+        no_risk_rate = float(eval(values['no_risk_rate']))
         funds = float(values['funds'])
         mk = Markovitz(names=stock_list, start_date=start_date,
                        end_date=end_date, frequency=frequency, no_risk_rate=no_risk_rate, funds=funds, path=path+'\\Markovitz')
@@ -106,13 +107,13 @@ class App(object):
         }
         dic.update(mk.calculate())
         name = func_name+'-'+str(stock_list)+'-'+str(start_date)+'--' + \
-            str(end_date)+'-'+values['no_risk_rate']+'-'+values['funds']
+            str(end_date)+'-'+str(no_risk_rate)+'-'+values['funds']
         self.save(path, name, dic)
         si = SyntheticIndex(
             weights=opt_dict['weights'], path=path+'\\Markovitz')
         si.draw_chart()
         mk.heatmap()
-        mk.drawing()
+        mk.CML()
 
     def markovitz_work(self):
         if self.event == 'Markovitz Portfolio':
@@ -274,6 +275,10 @@ class App(object):
                 sys.exit()
 
 
-if __name__ == '__main__':
+def app():
     app = App()
     app.work()
+
+
+if __name__ == '__main__':
+    app()

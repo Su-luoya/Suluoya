@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Suluoya
-Version: 3.3.7
+Version: 3.4.4
 Summary: A package called Suluoya.
 Home-page: https://github.com/pypa/sampleproject
 Author: Suluoya
@@ -24,6 +24,5 @@ License-File: LICENSE
 import Suluoya as sly
 sly.welcome()
 ```
-
 
 

@@ -47,7 +47,7 @@ class StockData(object):
                  start_date='2019-12-01', end_date='2020-12-31',
                  frequency='d',
                  adjustflag='3',
-                 path='.\\Suluoya cache\\'):
+                 path='.\\StockData Cache\\'):
         self.names = names
         self.start_date = start_date
         self.end_date = end_date
@@ -132,7 +132,6 @@ class StockData(object):
             df_list.append(df)
         df = pd.concat(df_list).apply(pd.to_numeric, errors='ignore')
         df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
-        # df['pctChg'] = df['pctChg']/100
         if self.path:
             df.to_csv(f'{self.path}\\stock data\\stocks_data.csv', index=False)
         return df
@@ -223,9 +222,8 @@ def GetGoodStock(page=5):
 
 
 if __name__ == '__main__':
-    # cs = StockData(names=['贵州茅台', '隆基股份'], start_date='2021-01-28',
-    #                end_date='2021-09-28', frequency='w',
-    #                path=r'.\\Suluoya cache\\')
-    # test = cs.stocks_info()
-    gs = GetGoodStock(1)
-    print(gs)
+    cs = StockData(names=['沪深300指数', '隆基股份'], start_date='2021-01-28',
+                   end_date='2021-09-28', frequency='w',
+                   path=r'.\\StockData cache\\')
+    test = cs.stocks_info()
+    print(test)

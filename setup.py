@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf8') as fh:
 
 setuptools.setup(
     name="Suluoya",
-    version="3.3.8",
+    version="3.4.4",
     author="Suluoya",
     author_email="1931960436@qq.com",
     maintainer='Suluoya',
@@ -35,5 +35,6 @@ setuptools.setup(
                       'pysimplegui',
                       'openpyxl',
                       'pyecharts',
+                      'statsmodels'
                       ]
 )

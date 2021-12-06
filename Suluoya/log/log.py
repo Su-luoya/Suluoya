@@ -10,7 +10,9 @@ def progress_bar(df):
     '''进度条，传入dataframe，返回可迭代对象'''
     scale = len(df)
     start = time.perf_counter()
-    for i,j in df.iterrows():
+    i=0
+    for j in df.itertuples():
+        i+=1
         print(f"\r{((i+1) / scale) * 100:^3.0f}%[{'*' * (i+1)}->{'.' * (scale - i-1)}]{time.perf_counter() - start:.2f}s",end = "")
         yield j
 
