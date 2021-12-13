@@ -14,3 +14,4 @@ pysimplegui
 openpyxl
 pyecharts
 statsmodels
+pyperclip

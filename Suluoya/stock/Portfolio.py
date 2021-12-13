@@ -826,9 +826,6 @@ class Port(Markovitz):
         '''
         计算给定收益率对应组合的风险、权重和夏普比率 --> 返回一个包含收益率、标准差、权重和夏普比率的字典
         '''
-        if self.path:
-            makedir(self.path, 'ask')
-            df.to_csv(f'{self.path}\\ask\\ask_returns={rate}.csv')
         return self.get_return(rate=rate)
 
     def max_loss(self, level=0.05):
@@ -1231,8 +1228,8 @@ class PortKline(object):
 
 if __name__ == '__main__':
     from pprint import pprint
-    fund = Port(weights={'贵州茅台': 0.3, '隆基股份': 0.2, '五粮液': 0.5})
-    pprint(fund.port_mean())
+    # fund = Port(weights={'贵州茅台': 0.3, '隆基股份': 0.2, '五粮液': 0.5})
+    # pprint(fund.port_mean())
 
     # capm = CAPM(names=['安科瑞', '紫光国微', '航发控制'],  # 股票组合
     #             start_date='2020-11-01',  # 开始日期
@@ -1240,13 +1237,13 @@ if __name__ == '__main__':
     #             frequency='w',  # 'd' or 'w' or 'm' → 日、周、月
     #             rfr=0.023467,  # 无风险利率
     #
-    # mk = Markovitz(names=['比亚迪', '阳光电源', '璞泰来', '紫光国微', '盛新锂能'],  # 股票组合
-    #                start_date='2021-05-01',  # 开始日期
-    #                end_date='2021-11-01',  # 结束日期
-    #                frequency='w',  # 'd' or 'w' or 'm' → 日、周、月
-    #                rfr=0.023467,  # 无风险利率
-    #                funds=10000000,  # 最大资金限制
-    #                )
+    mk = Markovitz(names=['比亚迪', '阳光电源', '璞泰来', '紫光国微', '盛新锂能'],  # 股票组合
+                   start_date='2021-05-01',  # 开始日期
+                   end_date='2021-11-01',  # 结束日期
+                   frequency='w',  # 'd' or 'w' or 'm' → 日、周、月
+                   rfr=0.023467,  # 无风险利率
+                   funds=10000000,  # 最大资金限制
+                   )
     # mk.heatmap(show=False)
     # mk.cml()
-    # mk.init_cml()
+    pprint(mk.init_port())
