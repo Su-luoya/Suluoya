@@ -39,3 +39,4 @@ setuptools.setup(
                       'pyperclip'
                       ]
 )
+
