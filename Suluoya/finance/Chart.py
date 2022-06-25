@@ -116,5 +116,5 @@ if __name__ == '__main__':
     cs = Chart()
     # print(df)
     # cs.setting(subplots=False, stacked=True)
-    # cs.plot(columns=['A', 'B'], kind='hist', )
-    cs.series(kind='series')
+    cs.plot(columns=['A', 'B'], kind='line', )
+    # cs.series(kind='series')
